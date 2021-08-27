@@ -1,9 +1,6 @@
-import 'dart:async';
-
+import '../dio_client.dart';
 import '../../models/users.dart';
 import '../../services/constants/endpoints.dart';
-
-import '../dio_client.dart';
 
 abstract class HomeApi {
   HomeApi._();
@@ -15,8 +12,11 @@ abstract class HomeApi {
 
       return UserData.fromJson(res);
     } catch (e) {
-      print(e.toString());
-      throw e;
+      return UserData.fromJson({
+        'data': [],
+        'message': 'Something went wrong'
+        // ignore: todo
+      }); //TODO: Here the actual message that the server throws is to be used for displaying at UI.
     }
   }
 }

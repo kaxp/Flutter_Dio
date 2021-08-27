@@ -18,25 +18,26 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Api call using dio setup'),
+          actions: [
+            IconButton(onPressed: model?.callApi, icon: Icon(Icons.refresh))
+          ],
         ),
         body: model!.isBusy
             ? const Center(child: CircularProgressIndicator())
-            : ListView(
-                padding: const EdgeInsets.all(0.0),
-                children: [
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: model.homeData!.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(model.homeData![index]['name'] as String),
-                        );
-                      }),
-                  SizedBox(height: 24),
-                  ElevatedButton(
-                      onPressed: model.callApi, child: Text('Call api again'))
-                ],
-              ));
+            : model.responseMessage!.isNotEmpty
+                ? Center(
+                    child: Text(
+                    model.responseMessage.toString(),
+                    style: TextStyle(color: Colors.black),
+                  ))
+                : ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: model.userData!.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(model.userData![index]['name'] as String),
+                      );
+                    }));
   }
 }

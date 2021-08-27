@@ -4,10 +4,8 @@ import '../../models/users.dart';
 import '../../services/api/home_api.dart';
 
 class HomeViewModel extends BaseViewModel {
-  late List<dynamic>? homeData = [];
-  final HomeApi? homeApi;
-
-  HomeViewModel({this.homeApi});
+  late List<dynamic>? userData = [];
+  late String? responseMessage = '';
 
   Future<void> initialise() async {
     callApi();
@@ -16,7 +14,8 @@ class HomeViewModel extends BaseViewModel {
   Future<UserData?> getUsers() async {
     final UserData? result = await HomeApi?.getUsers();
 
-    homeData = result?.data;
+    userData = result?.data;
+    responseMessage = result?.message;
     notifyListeners();
   }
 
